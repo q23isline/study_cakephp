@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0', '8.1']
+        php-version: ['8.1']
     name: PHP ${{ matrix.php-version }}
 
     steps:
@@ -30,7 +30,7 @@ jobs:
       with:
         php-version: ${{ matrix.php-version }}
         extensions: mbstring, intl, pdo_sqlite
-        coverage: none
+        coverage: xdebug
 
     - name: Composer install
       run: |
@@ -44,6 +44,7 @@ jobs:
     - name: Run PHPUnit
       run: |
         cp config/app_local.example.php config/app_local.php
+        cp config/.env.example config/.env
         vendor/bin/phpunit
       env:
         DATABASE_TEST_URL: sqlite://./testdb.sqlite
@@ -58,7 +59,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
+        php-version: '8.1'
         extensions: mbstring, intl
         coverage: none
 
@@ -78,7 +79,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
+        php-version: '8.1'
         extensions: mbstring, intl
         coverage: none
 
