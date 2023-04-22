@@ -17,7 +17,7 @@
             <fieldset>
                 <legend><?= __('Add Bulletin Board') ?></legend>
                 <?php
-                    echo $this->Form->control('commentNumber');
+                    echo $this->Form->control('comment_number');
                     echo $this->Form->control('comment');
                 ?>
             </fieldset>

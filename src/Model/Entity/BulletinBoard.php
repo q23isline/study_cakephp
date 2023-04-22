@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * BulletinBoard Entity
  *
  * @property string $id
- * @property int $commentNumber
+ * @property int $comment_number
  * @property string $comment
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
@@ -26,7 +26,7 @@ class BulletinBoard extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'commentNumber' => true,
+        'comment_number' => true,
         'comment' => true,
         'created' => true,
         'modified' => true,

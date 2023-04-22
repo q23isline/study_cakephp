@@ -23,7 +23,7 @@ class CreateBulletinBoards extends AbstractMigration
             'signed' => false,
             'comment' => 'ID',
         ]);
-        $table->addColumn('commentNumber', 'integer', [
+        $table->addColumn('comment_number', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,

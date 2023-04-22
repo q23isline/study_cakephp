@@ -55,9 +55,9 @@ class BulletinBoardsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('commentNumber')
-            ->requirePresence('commentNumber', 'create')
-            ->notEmptyString('commentNumber');
+            ->integer('comment_number')
+            ->requirePresence('comment_number', 'create')
+            ->notEmptyString('comment_number');
 
         $validator
             ->scalar('comment')

@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('commentNumber') ?></th>
+                    <th><?= $this->Paginator->sort('comment_number') ?></th>
                     <th><?= $this->Paginator->sort('comment') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
@@ -23,7 +23,7 @@
                 <?php foreach ($bulletinBoards as $bulletinBoard): ?>
                 <tr>
                     <td><?= h($bulletinBoard->id) ?></td>
-                    <td><?= $this->Number->format($bulletinBoard->commentNumber) ?></td>
+                    <td><?= $this->Number->format($bulletinBoard->comment_number) ?></td>
                     <td><?= h($bulletinBoard->comment) ?></td>
                     <td><?= h($bulletinBoard->created) ?></td>
                     <td><?= h($bulletinBoard->modified) ?></td>

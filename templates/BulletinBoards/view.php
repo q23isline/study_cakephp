@@ -27,8 +27,8 @@
                     <td><?= h($bulletinBoard->comment) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('CommentNumber') ?></th>
-                    <td><?= $this->Number->format($bulletinBoard->commentNumber) ?></td>
+                    <th><?= __('Comment Number') ?></th>
+                    <td><?= $this->Number->format($bulletinBoard->comment_number) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Created') ?></th>
