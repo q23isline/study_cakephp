@@ -1,12 +1,12 @@
 <?php
 /**
+ * @var \App\Model\Entity\BulletinBoard $newBulletinBoard
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\BulletinBoard> $bulletinBoards
  */
 ?>
 <?= $this->Html->css('bulletin-boards.css'); ?>
 <div class="bulletinBoards index content">
-    <?= $this->Html->link(__('コメント追加'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('掲示板') ?></h3>
     <div id="comments">
         <?php foreach ($bulletinBoards as $bulletinBoard): ?>
@@ -38,6 +38,20 @@
             <?= $this->Paginator->next(__('次') . ' >') ?>
             <?= $this->Paginator->last(__('最後') . ' >>') ?>
         </ul>
+    </div>
+    <div>
+        <?= $this->Form->create($newBulletinBoard, ['url' => ['action' => 'add']]) ?>
+        <fieldset>
+            <?php
+                echo $this->Form->control('comment', [
+                    'type' => 'textarea',
+                    'label' => '',
+                    'placeholder' => 'コメント内容',
+                ]);
+            ?>
+        </fieldset>
+        <?= $this->Form->button(__('レスを投稿する')) ?>
+        <?= $this->Form->end() ?>
     </div>
 </div>
 

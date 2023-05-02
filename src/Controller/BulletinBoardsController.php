@@ -19,8 +19,9 @@ class BulletinBoardsController extends AppController
     public function index()
     {
         $bulletinBoards = $this->paginate($this->BulletinBoards, ['limit' => 1000, 'order' => ['comment_number']]);
+        $newBulletinBoard = $this->BulletinBoards->newEmptyEntity();
 
-        $this->set(compact('bulletinBoards'));
+        $this->set(compact('bulletinBoards', 'newBulletinBoard'));
     }
 
     /**
@@ -30,7 +31,7 @@ class BulletinBoardsController extends AppController
      */
     public function add()
     {
-        $bulletinBoard = $this->BulletinBoards->newEmptyEntity();
+        $newBulletinBoard = $this->BulletinBoards->newEmptyEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
             $query = $this->BulletinBoards->find();
@@ -40,15 +41,19 @@ class BulletinBoardsController extends AppController
             }
             $commentNumberMax = $record['comment_number_max'] ?? 0;
             $data['comment_number'] = (int)$commentNumberMax + 1;
-            $bulletinBoard = $this->BulletinBoards->patchEntity($bulletinBoard, $data);
-            if ($this->BulletinBoards->save($bulletinBoard)) {
-                $this->Flash->success(__('保存されました。'));
+            $newBulletinBoard = $this->BulletinBoards->patchEntity($newBulletinBoard, $data);
+            if ($this->BulletinBoards->save($newBulletinBoard)) {
+                $this->Flash->success(__('投稿しました。'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('保存できませんでした。再試行してください。'));
+            $this->Flash->error(__('投稿できませんでした。再試行してください。'));
         }
-        $this->set(compact('bulletinBoard'));
+
+        $bulletinBoards = $this->paginate($this->BulletinBoards, ['limit' => 1000, 'order' => ['comment_number']]);
+
+        $this->set(compact('bulletinBoards', 'newBulletinBoard'));
+        $this->render('index');
     }
 
     /**
