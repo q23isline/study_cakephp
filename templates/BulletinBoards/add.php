@@ -7,21 +7,21 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Bulletin Boards'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('コメント一覧'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="bulletinBoards form content">
             <?= $this->Form->create($bulletinBoard) ?>
             <fieldset>
-                <legend><?= __('Add Bulletin Board') ?></legend>
                 <?php
-                    echo $this->Form->control('comment_number');
-                    echo $this->Form->control('comment');
+                    echo $this->Form->control('comment', [
+                        'type' => 'textarea',
+                        'label' => __('コメント'),
+                    ]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('追加')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

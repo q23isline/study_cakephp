@@ -1,0 +1,38 @@
+.bulletinBoards.index.content #comments .comment {
+    padding-bottom: 12px;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-content {
+    padding: 10px 0;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-content span.reply {
+    color: blue;
+    text-decoration: underline;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-header span.comment-number {
+    font-size: 90%;
+    padding-right: 8px;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-header span.name {
+    color: green;
+    font-weight: bold;
+    padding-right: 8px;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-header span.date {
+    font-size: 90%;
+    padding-right: 8px;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-header span.id {
+    font-size: 90%;
+    padding-right: 8px;
+}
+
+.bulletinBoards.index.content #comments .comment .comment-row-header span.delete a {
+    font-size: 80%;
+    padding-right: 8px;
+}

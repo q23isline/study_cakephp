@@ -4,47 +4,50 @@
  * @var iterable<\App\Model\Entity\BulletinBoard> $bulletinBoards
  */
 ?>
+<?= $this->Html->css('bulletin-boards.css'); ?>
 <div class="bulletinBoards index content">
-    <?= $this->Html->link(__('New Bulletin Board'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Bulletin Boards') ?></h3>
-    <div class="table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('comment_number') ?></th>
-                    <th><?= $this->Paginator->sort('comment') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($bulletinBoards as $bulletinBoard): ?>
-                <tr>
-                    <td><?= h($bulletinBoard->id) ?></td>
-                    <td><?= $this->Number->format($bulletinBoard->comment_number) ?></td>
-                    <td><?= h($bulletinBoard->comment) ?></td>
-                    <td><?= h($bulletinBoard->created) ?></td>
-                    <td><?= h($bulletinBoard->modified) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $bulletinBoard->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $bulletinBoard->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $bulletinBoard->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bulletinBoard->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <?= $this->Html->link(__('コメント追加'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <h3><?= __('掲示板') ?></h3>
+    <div id="comments">
+        <?php foreach ($bulletinBoards as $bulletinBoard): ?>
+            <div class="comment">
+                <div class="comment-row-header">
+                    <span class="comment-number"><?= $this->Number->format($bulletinBoard->comment_number) ?></span>
+                    <span class="name"><?= __('名無しさん') ?></span>
+                    <span class="date"><?= h($bulletinBoard->created->format('Y/m/d H:i:s')) ?></span>
+                    <span class="id"><?= __('ID:') . h(substr($bulletinBoard->id, 0, 8)) ?></span>
+                    <span class="delete">
+                        <?php
+                            echo $this->Form->postLink(
+                                __('削除'),
+                                ['action' => 'delete', $bulletinBoard->id],
+                                ['confirm' => __('# {0} を削除してもよろしいですか？', $bulletinBoard->comment_number)]
+                            )
+                        ?>
+                    </span>
+                </div>
+                <p class="comment-row-content"><?= nl2br(h($bulletinBoard->comment)) ?></p>
+            </div>
+        <?php endforeach; ?>
     </div>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->first('<< ' . __('最初')) ?>
+            <?= $this->Paginator->prev('< ' . __('前')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?= $this->Paginator->next(__('次') . ' >') ?>
+            <?= $this->Paginator->last(__('最後') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>
+
+<script>
+    function replyHighlight(body) {
+        const regexp = new RegExp(/(&gt;&gt;\d+)/, 'gi')
+        body = body.replace(regexp, '<span class="reply">$1</span>')
+        return body
+    }
+
+    var comments = document.getElementById('comments').innerHTML;
+    document.getElementById('comments').innerHTML = replyHighlight(comments);
+</script>
