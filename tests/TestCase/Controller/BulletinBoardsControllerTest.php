@@ -37,34 +37,12 @@ class BulletinBoardsControllerTest extends TestCase
     }
 
     /**
-     * Test view method
-     *
-     * @return void
-     * @uses \App\Controller\BulletinBoardsController::view()
-     */
-    public function testView(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test add method
      *
      * @return void
      * @uses \App\Controller\BulletinBoardsController::add()
      */
     public function testAdd(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test edit method
-     *
-     * @return void
-     * @uses \App\Controller\BulletinBoardsController::edit()
-     */
-    public function testEdit(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

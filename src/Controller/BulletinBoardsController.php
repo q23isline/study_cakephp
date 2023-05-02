@@ -24,22 +24,6 @@ class BulletinBoardsController extends AppController
     }
 
     /**
-     * View method
-     *
-     * @param string|null $id Bulletin Board id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $bulletinBoard = $this->BulletinBoards->get($id, [
-            'contain' => [],
-        ]);
-
-        $this->set(compact('bulletinBoard'));
-    }
-
-    /**
      * Add method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
@@ -48,30 +32,6 @@ class BulletinBoardsController extends AppController
     {
         $bulletinBoard = $this->BulletinBoards->newEmptyEntity();
         if ($this->request->is('post')) {
-            $bulletinBoard = $this->BulletinBoards->patchEntity($bulletinBoard, $this->request->getData());
-            if ($this->BulletinBoards->save($bulletinBoard)) {
-                $this->Flash->success(__('The bulletin board has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The bulletin board could not be saved. Please, try again.'));
-        }
-        $this->set(compact('bulletinBoard'));
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Bulletin Board id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $bulletinBoard = $this->BulletinBoards->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
             $bulletinBoard = $this->BulletinBoards->patchEntity($bulletinBoard, $this->request->getData());
             if ($this->BulletinBoards->save($bulletinBoard)) {
                 $this->Flash->success(__('The bulletin board has been saved.'));
