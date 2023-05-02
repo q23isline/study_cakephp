@@ -4,9 +4,9 @@ declare(strict_types=1);
 use Migrations\AbstractSeed;
 
 /**
- * Users seed.
+ * BulletinBoards seed.
  */
-class UsersSeed extends AbstractSeed
+class BulletinBoardsSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -22,7 +22,7 @@ class UsersSeed extends AbstractSeed
     {
         $data = [];
 
-        $table = $this->table('users');
+        $table = $this->table('bulletin_boards');
         $table->insert($data)->save();
     }
 }
