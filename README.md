@@ -1,53 +1,117 @@
-# CakePHP Application Skeleton
+# Study CakePHP
 
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+[![LICENSE](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+![releases](https://img.shields.io/github/release/q23isline/study_cakephp.svg?logo=github)
+[![GitHub Actions](https://github.com/q23isline/study_cakephp/actions/workflows/ci.yml/badge.svg)](https://github.com/q23isline/study_cakephp/actions/workflows/ci.yml)
+[![PHPStan](https://img.shields.io/badge/PHPStan-level%208-brightgreen.svg)](https://github.com/phpstan/phpstan)
+[![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=555555&color=007acc&logoColor=007acc)](https://open.vscode.dev/q23isline/study_cakephp)
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
+[![PHP](https://img.shields.io/static/v1?logo=php&label=PHP&message=v8.1.13&labelColor=555555&color=777BB4&logoColor=777BB4)](https://www.php.net)
+[![CakePHP](https://img.shields.io/static/v1?logo=cakephp&label=CakePHP&message=v4.4.12&labelColor=555555&color=D33C43&logoColor=D33C43)](https://cakephp.org)
+[![MySQL](https://img.shields.io/static/v1?logo=mysql&label=MySQL&message=v8.0&labelColor=555555&color=4479A1&logoColor=4479A1)](https://dev.mysql.com)
+[![NGINX](https://img.shields.io/static/v1?logo=nginx&label=NGINX&message=v1.21&labelColor=555555&color=009639&logoColor=009639)](https://www.nginx.com)
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+## はじめにやること
 
-## Installation
+1. ソースダウンロード
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+    ```bash
+    git clone 'https://github.com/q23isline/study_cakephp.git'
+    ```
 
-If Composer is installed globally, run
+2. `config/.env.example`をコピーし、`config/.env`として貼り付ける
+    - ファイル内の`SECURITY_SALT`の値は適当に書き換える
+
+    ```bash
+    cd study_cakephp
+    cp config/.env.example config/.env
+    ```
+
+3. `config/app_local.example.php`をコピーし、`config/app_local.php`として貼り付ける
+
+    ```bash
+    cp config/app_local.example.php config/app_local.php
+    ```
+
+4. DB コンテナ起動時に Permission Denied で起動できない状態にならないように権限付与する
+
+    ```bash
+    sudo chmod -R ugo+w logs
+    ```
+
+5. アプリ立ち上げ
+
+    ```bash
+    docker-compose build --no-cache
+    docker-compose down -v
+    sudo rm -rf vendor
+    docker create -it --name tmp study_cakephp-app bash
+    docker cp tmp:/var/www/html/vendor $(pwd)
+    docker rm -f tmp
+    docker-compose up -d
+    docker exec -it app bin/cake migrations migrate
+    docker exec -it app bin/cake migrations seed
+    ```
+
+## 日常的にやること
+
+### システム起動
 
 ```bash
-composer create-project --prefer-dist cakephp/app
+docker-compose up -d
 ```
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+### システム終了
 
 ```bash
-composer create-project --prefer-dist cakephp/app myapp
+docker-compose down
 ```
 
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
+## 動作確認
+
+### URL
+
+- <http://localhost>
+
+### Permission Denied対策
+
+- 画面にPermission Deniedエラーが表示される場合、以下を実行
+  - 本番環境では適切に権限を付与すべきだがとりあえず動くようにフル権限を付与
 
 ```bash
-bin/cake server -p 8765
+sudo chmod -R 777 tmp
+sudo chmod -R ugo+w logs
 ```
 
-Then visit `http://localhost:8765` to see the welcome page.
+## コード静的解析＆ユニットテスト
 
-## Update
+```bash
+docker exec -it app php composer.phar check
+```
 
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
+### コーディング標準チェック単体実行
 
-## Configuration
+```bash
+# コーディング標準チェック実行
+docker exec -it app ./vendor/bin/phpcs --colors -p src/ tests/
+# コーディング標準チェック自動整形実行
+docker exec -it app ./vendor/bin/phpcbf --colors -p src/ tests/
+```
 
-Read and edit the environment specific `config/app_local.php` and setup the 
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+### 静的分析チェック単体実行
 
-## Layout
+```bash
+docker exec -it app ./vendor/bin/phpstan analyse
+```
 
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+### ユニットテスト単体実行
+
+```bash
+# テスト実行
+docker exec -it --env XDEBUG_MODE=coverage app ./vendor/bin/phpunit --colors=always
+# カバレッジ生成
+docker exec -it --env XDEBUG_MODE=coverage app ./vendor/bin/phpunit --coverage-html webroot/coverage
+```
+
+- カバレッジ確認URL
+  - <http://localhost/coverage/index.html>
