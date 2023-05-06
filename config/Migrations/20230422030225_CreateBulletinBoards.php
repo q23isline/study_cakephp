@@ -31,7 +31,7 @@ class CreateBulletinBoards extends AbstractMigration
         ]);
         $table->addColumn('comment', 'string', [
             'default' => null,
-            'limit' => 500,
+            'limit' => 1000,
             'null' => false,
             'comment' => 'コメント',
         ]);
