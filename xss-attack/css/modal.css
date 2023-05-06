@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+#xss-modal-back {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#xss-modal {
+    margin: 15vh auto;
+    height: 60vh;
+    width: 50%;
+    background-color: #f4f4f4;
+}
+
+#xss-img {
+    display: block;
+    margin: auto;
+}
+
+#xss-text {
+    text-align: center;
+}
+
+#xss-link {
+    font-size: 2em;
+}
