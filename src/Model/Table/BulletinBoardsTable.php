@@ -60,7 +60,7 @@ class BulletinBoardsTable extends Table
 
         $validator
             ->scalar('comment')
-            ->maxLength('comment', 500)
+            ->maxLength('comment', 1000)
             ->requirePresence('comment', 'create')
             ->notEmptyString('comment');
 
