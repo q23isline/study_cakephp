@@ -48,6 +48,7 @@
     docker create -it --name tmp study_cakephp-app bash
     docker cp tmp:/var/www/html/vendor $(pwd)
     docker rm -f tmp
+    sudo chown -R $(whoami):$(whoami) vendor
     docker-compose up -d
     docker exec -it app bin/cake migrations migrate
     docker exec -it app bin/cake migrations seed
